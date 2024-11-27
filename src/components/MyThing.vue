@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+// @ts-ignore 
 import { arr as values } from '@/data'
 import { ref } from 'vue';
 
@@ -7,7 +8,7 @@ import Textarea from 'primevue/textarea';
 
 const length = 5;
 
-function getRandomValues(arr: unknown[], num: number) {
+function getRandomValues(arr: string[], num: number) {
     const shuffled = arr.sort(() => 0.5 - Math.random());
     return shuffled.slice(0, num);
 }
