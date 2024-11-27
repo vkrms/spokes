@@ -3,6 +3,8 @@
 import { arr as values } from '@/data'
 import { ref } from 'vue';
 
+import Textarea from 'primevue/textarea';
+
 const length = 5;
 
 function getRandomValues(arr: unknown[], num: number) {
@@ -28,6 +30,36 @@ const refresh = () => {
     console.log('refreshing...');
     randomValues.value = getRandomValues(values, length);
     checkboxes.value = getEmpties(length);
+    randNum.value = getRandNum();
+};
+
+function getRandNum() {
+    return Math.ceil(Math.random() * length);
+}
+
+function gotEmptyCheckboxes() {
+    return checkboxes.value.some((checkbox) => !checkbox);
+}
+
+function getRandNumNotTaken() {
+    let index = getRandNum();
+
+    if (!gotEmptyCheckboxes()) {
+        return 666; // no options are highlighted
+    }
+
+    while (checkboxes.value[index - 1]) {
+        index = getRandNum();
+    }
+
+    return index;
+}
+
+const randNum = ref(getRandNum());
+
+const updateRandNum = () => {
+    console.log('updating');
+    randNum.value = getRandNumNotTaken();
 };
 
 </script>
@@ -42,12 +74,22 @@ const refresh = () => {
         <pre class="pre">{{ randomValues }}</pre>        
 
         <ul class="list">
-            <li v-for="(value, i) in randomValues" :key="value">
-                <Checkbox v-model="checkboxes[i]" :binary="true" class="checkbox"/>
+            <li v-for="(value, i) in randomValues"
+                :key="value"
+                :class="{isHighlighted: (i === randNum - 1)}"
+            >
+                <Checkbox
+                    v-model="checkboxes[i]"
+                    :binary="true"                    
+                    class="checkbox"
+                    @change="updateRandNum"
+                />
                 {{ value }}
             </li>
         </ul>
     </div>
+
+    <Textarea rows="5" cols="30" placeholder="Write a few thought on how you can improve the currently highlighted area" />
 </template>
 
 <style>

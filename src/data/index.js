@@ -8,3 +8,5 @@ export const arr = [
     'fun & recreation',
     'physical environment',
 ]
+
+const career = ['coding', 'ui', 'dating app project', 'soft skills course', 'it social']

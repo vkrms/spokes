@@ -94,7 +94,14 @@ button:focus-visible {
   gap: 32px;
 }
 
-.checkbox {
+.p-checkbox.checkbox {
   vertical-align: -4px;
   margin-right: 6px;
+}
+
+.isHighlighted {
+  font-weight: 700;
+  width: fit-content;
+  padding: 0 4px;
+  margin-inline: -4px;
 }
